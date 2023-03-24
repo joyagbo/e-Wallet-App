@@ -37,11 +37,11 @@ app.use(express.static('public')) //code for making styles show
 
 app.set('view engine', 'ejs')
 
-app.get('/', (req, res) => { //routes
+app.get('/dashbord', (req, res) => { //routes
   res.render('index',{users:users,transactions:transactions})
 })
 
-app.get('/login', (req, res) => {
+app.get('/', (req, res) => {
     res.render('login')
    })
 

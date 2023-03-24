@@ -1,8 +1,9 @@
 const sequelize = require("../config/connections.js");
 const { Customer } = require("../models/customer.js");
+const jwt = require("jsonwebtoken")
 const bcrypt = require('bcryptjs');
 const saltRounds = bcrypt.genSaltSync(10);
-
+const secret = "secret"
 
 const register = async (req, res) => {
     const cus = {
@@ -33,28 +34,32 @@ const register = async (req, res) => {
     })
 
 }
-    const login = async (req, res) => {
-        const username= req.body.username
-        const password= bcrypt.hashSync(req.body.password, saltRounds)
-        //res.status(200).json([{message:password}])
-        
-        Customer.findOne({
-            where: {
-                username: username,
-                password:password
+
+
+const login = async (req, res) => {
+    const username = req.body.username
+    const password = req.body.password
+    Customer.findOne({
+        where: {
+            username: username
+        }
+    }).then(rs => 
+    {
+        if (rs) {
+            const validity = bcrypt.compareSync(password, rs.dataValues.password)
+            if (validity == true) {
+                const token = jwt.sign(rs.dataValues, secret)
+                res.status(200).json([{ message: token }])
+            } else {
+                res.status(200).json([{ message: "invalid password" }])
             }
-        }).then(rs => {
-            res.status(200).json([{message:""}])
-         Customer.findAll({
-           where:{
-             username:username,
-            password:bcrypt.compare(password, res[0].password)
-            } 
-          }).then(userrs=>{
-             res.status(200).json([{message:userrs}])
-          })   
-        }).catch(err => {
-            console.log(err)
-        })     
+
+        } else {
+            res.status(200).json([{ message: "Invalid username " }])
+         }
+    }).catch(err => {
+        console.log(err)
+    })
 }
-module.exports = { register, login}
+module.exports = { register, login }
+
