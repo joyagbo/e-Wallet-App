@@ -61,5 +61,10 @@ const login = async (req, res) => {
         console.log(err)
     })
 }
-module.exports = { register, login }
+
+
+const dashboard = (req,res)=>{
+    res.status(200).json([{ message: req.token}])
+}
+module.exports = { register, login, dashboard }
 
