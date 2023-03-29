@@ -76,14 +76,6 @@
   </div>
 
   <script>
-     const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    })
-
     const form = document.getElementById('formlogin');
     if (form) {
       form.addEventListener("submit", (e) => {
@@ -111,17 +103,14 @@
           })
         } else {
           console.log(res.data[0].message)
-          //localStorage.setItem("token",res.data[0].message)
+          localStorage.setItem("token",res.data[0].message)
           window.location = '/dashboard'
 
         }
 
-
-
       }).catch(err => {
         console.log(err)
       })
-
 
     }
   </script>
