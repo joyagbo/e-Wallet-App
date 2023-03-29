@@ -37,7 +37,8 @@ app.use(express.static('public')) //code for making styles show
 
 app.set('view engine', 'ejs')
 
-app.get('/dashbord', (req, res) => { //routes
+app.get('/dashboard', (req, res) => { //routes
+  
   res.render('index',{users:users,transactions:transactions})
 })
 
