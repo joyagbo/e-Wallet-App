@@ -504,15 +504,27 @@
     <!-- page-body-wrapper ends -->
   </div>
   <script>
-    axios.get('/user?ID=12345')
-  .then(function (response) {
-    // handle success
-    console.log(response);
+    const url = ('http://127.0.0.1:5000')
+    const assesstoken = localStorage.getItem("token")
+  //   axios.get('/user?ID=12345')
+  // .then(function (response) {
+  //   // handle success
+  //   console.log(response);
+  // })
+  // .catch(function (error) {
+  //   // handle error
+  //   console.log(error);
+  // });
+  const authAxios = axios.create({
+    baseUrl: url,
+    headers:{
+      Authorization: `Bearer ${assesstoken}`
+    }
   })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  });
+authAxios.get(`${url}/dashboard`).then(rs=>{
+  console.log("backend")
+  console.log(rs)
+})
   </script>
   <!-- container-scroller -->
 
