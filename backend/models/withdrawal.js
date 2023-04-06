@@ -11,6 +11,10 @@ const withdrawal = sequelize.define('withdrawal',{
         type:Sequelize.DOUBLE,
         allowNull:false
     },
+    custid:{
+        type:Sequelize.UUID,
+        defaultValue:Sequelize.UUIDV4,
+    }
 })
 
 module.exports = {withdrawal}

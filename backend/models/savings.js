@@ -12,6 +12,10 @@ const deposit = sequelize.define('deposit',{
         type:Sequelize.DOUBLE,
         allowNull:false
     },
+    custid:{
+        type:Sequelize.UUID,
+        defaultValue:Sequelize.UUIDV4,
+    }
 })
 
 module.exports ={deposit}
