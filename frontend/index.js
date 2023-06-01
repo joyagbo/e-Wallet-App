@@ -31,7 +31,7 @@ var transactions = [
     }
 ]
 
-var users =[{username:"Joy",email:"joy@gmail.com",balance:1000},{username:"",email:""}]
+var users =[{username:"Joy",email:"joy@gmail.com",balance:500},{username:"",email:""}]
 
 app.use(express.static('public')) //code for making styles show
 

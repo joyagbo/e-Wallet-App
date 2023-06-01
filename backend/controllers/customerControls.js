@@ -11,7 +11,7 @@ const register = async (req, res) => {
     const cus = {
         cusName: req.body.CustomerName,
         username: req.body.username,
-        password: bcrypt.hashSync(req.body.password, saltRounds)
+        password: bcrypt.hashSync(req.body.password, saltRounds),
     };
     Customer.findAll({
         where: {
@@ -45,8 +45,7 @@ const login = async (req, res) => {
         where: {
             username: username
         }
-    }).then(rs => 
-    {
+    }).then(rs => {
         if (rs) {
             const validity = bcrypt.compareSync(password, rs.dataValues.password)
             if (validity == true) {
@@ -58,26 +57,46 @@ const login = async (req, res) => {
 
         } else {
             res.status(200).json([{ message: "Invalid username " }])
-         }
+        }
     }).catch(err => {
         console.log(err)
     })
 }
 
 
-const dashboard = (req,res)=>{
-    res.status(200).json([{ message: req.decoded}])
+const dashboard = async (req, res) => {
+    let total = 0
+    let totalwith = 0
     const customerID = req.decoded.custid
-    console.log(customerID)
-    deposit.findAll({
-        where:{
+   
+    const result = await deposit.findAll({
+        where: {
             custid: customerID
-        }
-    }).then(rs=>{
-        console.log(rs.dataValues)
-    }).catch(err=>{
-        console.log(err)
+        },
+
     })
+
+    result.map((r) => {
+        total = total + r.dataValues.Amountdep;
+    })
+    
+    withdrawal.findAll({
+        where:{
+            custid: customerID,
+        },
+    }).then(rsw=>{
+      rsw.map((rw) => {
+        return (total = totalwith + rw.dataValues.Amountwithdraw)
+    })
+    
+    }).catch(err=>{
+console.log (err)
+    })
+
+
+    res.status(200).json([{customer:customerID, fullname:req.decoded.cusName, savings: total,withdrawal:totalwith, balance:total-totalwith }])  
 }
+
+
 module.exports = { register, login, dashboard }
 

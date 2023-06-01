@@ -506,25 +506,23 @@
   <script>
     const url = ('http://127.0.0.1:5000')
     const assesstoken = localStorage.getItem("token")
-  //   axios.get('/user?ID=12345')
-  // .then(function (response) {
-  //   // handle success
-  //   console.log(response);
-  // })
-  // .catch(function (error) {
-  //   // handle error
-  //   console.log(error);
-  // });
   const authAxios = axios.create({
     baseUrl: url,
     headers:{
       Authorization: `Bearer ${assesstoken}`
     }
   })
-authAxios.get(`${url}/dashboard`).then(rs=>{
+authAxios.post(`${url}/dashboard`).then(rs=>{
   console.log("backend")
-  console.log(rs)
+  console.log(rs.data[0].fullname)
+  document.getElementById('username').innerHTML = rs.data.fullname
+  document.getElementById('balance').innerHTML = parseFloat(rs.data[0].balance)
+
+
+  document.getElementById("totalsavings").innerHTML = rs.data[0].savings
+document.getElementById("totalwithdrawal").innerHTML = parseFloat(rs.data[0].withdrawal)
 })
+
   </script>
   <!-- container-scroller -->
 
