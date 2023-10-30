@@ -94,7 +94,11 @@ console.log (err)
     })
 
 
-    res.status(200).json([{customer:customerID, fullname:req.decoded.cusName, savings: total,withdrawal:totalwith, balance:total-totalwith }])  
+    res.status(200).json([{customer:customerID, 
+        fullname:req.decoded.cusName, 
+        savings: total,
+        withdrawal:totalwith, 
+        balance:total-totalwith }])  
 }
 
 
