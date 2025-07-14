@@ -1,5 +1,5 @@
 const express = require('express');
-const { routeManger } = require('./routes/rts.js');
+const { routeManger } = require('./routes/customerRoute.js');
 const dotenv = require('dotenv');
 const bodyParser = require("body-parser")
 const app = express()
